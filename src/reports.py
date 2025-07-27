@@ -9,4 +9,3 @@ logging.basicConfig(
     filemode="w",
 )
 views_log = logging.getLogger(__name__)
-
