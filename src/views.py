@@ -1,6 +1,6 @@
 import json
-from os import remove
-from unicodedata import category
+from importlib.metadata import pass_none
+from typing import List, Dict, Any
 
 import pandas as pd
 import datetime
@@ -12,14 +12,15 @@ def greeting():
     time = datetime.datetime.now()
     hour = time.hour
     if 5 <= hour < 12:
-        return json.dumps("Доброе утро")
+        return "Доброе утро"
     elif 12 <= hour < 18:
-        return json.dumps("Добрый день")
+        return "Добрый день"
     elif 18 <= hour < 24:
-        return json.dumps("Добрый вечер")
+        return "Добрый вечер"
     else:
-        return json.dumps("Доброй ночи")
+        return "Доброй ночи"
 
+greet = greeting()
 
 def load_transactions(file_path: str) -> pd.DataFrame:
     """Читает Excel-файл и выдает DataFrame"""
@@ -32,7 +33,8 @@ def load_transactions(file_path: str) -> pd.DataFrame:
         print(ex)
 
 
-def get_card_info(date_time: str) -> str:
+def get_card_info(date_time: str) -> list[
+    dict[str, str] | dict[str, list[dict[str, float | int | Any]]] | dict[str, str] | dict[str, str] | dict[str, str]]:
     """Функция отображает данные по картам: номер, сумму трат по карте и полученный кэшбэк"""
     date_time_pd = pd.to_datetime(date_time)
     operations = load_transactions('/Users/rybin/PycharmProjects/bank_operations_analysis/data/operations.xlsx')
@@ -51,26 +53,18 @@ def get_card_info(date_time: str) -> str:
             "cashback": round(float(total_spent * 0.01))
         })
 
-    # top_transactions = []
-    # if len(top_transactions) <= 5:
-    #     for amount in filtered["Сумма операции"]:
-    #         top_transaction_amounts = filtered[filtered["Сумма операции"] == amount]
-    #         date = top_transaction_amounts["Дата операции"]
-    #         amount = top_transaction_amounts["Сумма операции"]
-    #         cat = top_transaction_amounts["Категория"]
-    #         description = top_transaction_amounts["Описание"]
-    #         top_transactions.append({
-    #             "date": date,
-    #             "amount": float(amount),
-    #             "category": str(cat),
-    #             "description": str(description)
-    #         })
+    filtered = filtered.sort_values(by='Сумма операции', ascending=True)
+    filtered = filtered.head(5)
+    required_columns = ['Дата операции', 'Сумма операции', 'Категория', 'Описание']
+    top_transactions = filtered[required_columns].to_dict(orient="records")
+
+    currency_rates = []
 
 
-
-    final_data = [card_data]
-
-
-    return final_data
+    return [{"greeting": greet},
+            {"cards": card_data},
+            {"top_transactions": top_transactions},
+            {"currency_rates": "pass"},
+            {"stock_prices": "pass"}]
 
 print(get_card_info('2021-01-29 22:49:17'))
