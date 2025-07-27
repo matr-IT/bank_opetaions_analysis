@@ -1,4 +1,6 @@
 import json
+from os import remove
+from unicodedata import category
 
 import pandas as pd
 import datetime
@@ -42,12 +44,33 @@ def get_card_info(date_time: str) -> str:
     card_data = []
     for card in filtered['Номер карты'].dropna().unique():
         card_transactions = filtered[filtered['Номер карты'] == card]
-        # total_spent = sum([i for i in card_transactions['Сумма операции'] if i < 0])
         total_spent = card_transactions["Сумма операции"].sum() * -1
         card_data.append({
             "last_digits": card[-4:],
             "total_spent": round(float(total_spent), 2),
             "cashback": round(float(total_spent * 0.01))
         })
-    return json.dumps(card_data)
 
+    # top_transactions = []
+    # if len(top_transactions) <= 5:
+    #     for amount in filtered["Сумма операции"]:
+    #         top_transaction_amounts = filtered[filtered["Сумма операции"] == amount]
+    #         date = top_transaction_amounts["Дата операции"]
+    #         amount = top_transaction_amounts["Сумма операции"]
+    #         cat = top_transaction_amounts["Категория"]
+    #         description = top_transaction_amounts["Описание"]
+    #         top_transactions.append({
+    #             "date": date,
+    #             "amount": float(amount),
+    #             "category": str(cat),
+    #             "description": str(description)
+    #         })
+
+
+
+    final_data = [card_data]
+
+
+    return final_data
+
+print(get_card_info('2021-01-29 22:49:17'))
