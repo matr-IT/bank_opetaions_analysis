@@ -1,11 +1,34 @@
+import json
 import re
-import logging
 
-# Инициируем логгер для модуля services
-logging.basicConfig(
-    level=logging.DEBUG,
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-    filename="/Users/rybin/PycharmProjects/bank_operations_analysis/logs/services.log",
-    filemode="w",
-)
-views_log = logging.getLogger(__name__)
+
+from views import load_transactions
+
+
+def process_bank_search(search=None) -> json:
+    """Filters operations by keyword from their descriptions"""
+
+    operations = load_transactions(
+        "/Users/rybin/PycharmProjects/bank_operations_analysis/data/operations.xlsx"
+    ).to_dict(orient="records")
+
+    if not search:
+        return operations
+
+    pattern = re.compile(re.escape(search), re.IGNORECASE)
+
+    result = []
+
+    for i in operations:
+        description = i["Описание"]
+        category = i["Категория"]
+        if pattern.search(description) or pattern.search(str(category)):
+            result.append(i)
+
+    if result:
+        return result
+    else:
+        return "Транзакции не обнаружены"
+
+
+print(process_bank_search("Билет"))
