@@ -21,7 +21,8 @@ def process_bank_search(search=None) -> json:
 
     for i in operations:
         description = i["Описание"]
-        if pattern.search(description):
+        category = i["Категория"]
+        if pattern.search(description) or pattern.search(str(category)):
             result.append(i)
 
     if result:
@@ -30,4 +31,4 @@ def process_bank_search(search=None) -> json:
         return "Транзакции не обнаружены"
 
 
-print(process_bank_search())
+print(process_bank_search("Билет"))
