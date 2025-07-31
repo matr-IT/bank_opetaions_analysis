@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 import datetime
 
 import pandas as pd
+
 load_dotenv()
 
 
@@ -77,15 +78,13 @@ def get_card_info(date_time: str):
         rate = float(response["result"])
         currency_rates.append({"currency": cur, "rate": rate})
 
-
     for st in stocks:
         url = f"https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol={st}&apikey=API_KEY_STOCK_PRICES"
         headers = {"apikey": os.getenv("API_KEY_STOCK_PRICES")}
         response = requests.get(url, headers=headers)
         response = response.json()
-        price = float(response['Global Quote']["08. previous close"])
+        price = float(response["Global Quote"]["08. previous close"])
         stock_prices.append({"stock": st, "price": price})
-
 
     return [
         {"greeting": greet},
@@ -94,5 +93,3 @@ def get_card_info(date_time: str):
         {"currency_rates": currency_rates},
         {"stock_prices": stock_prices},
     ]
-
-
