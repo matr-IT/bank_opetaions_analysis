@@ -1,7 +1,6 @@
 import json
 import re
 
-
 from views import load_transactions
 
 

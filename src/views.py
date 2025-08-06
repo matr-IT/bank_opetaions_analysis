@@ -1,11 +1,10 @@
+import datetime
 import json
 import os
 
+import pandas as pd
 import requests
 from dotenv import load_dotenv
-import datetime
-
-import pandas as pd
 
 load_dotenv()
 
