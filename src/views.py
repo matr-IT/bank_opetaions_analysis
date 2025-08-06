@@ -62,13 +62,13 @@ def get_card_info(date_time: str):
         price = float(response["Global Quote"]["08. previous close"])
         stock_prices.append({"stock": st, "price": price})
 
-    return [
+    return json.dumps([
         {"greeting": greet},
         {"cards": card_data},
         {"top_transactions": top_transactions},
         {"currency_rates": currency_rates},
         {"stock_prices": stock_prices},
-    ]
+    ])
 
 
-print(get_card_info("31-12-2021 16:42:04"))
+# print(get_card_info("31-12-2021 16:42:04"))
