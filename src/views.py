@@ -92,3 +92,5 @@ def get_card_info(date_time: str):
         {"currency_rates": currency_rates},
         {"stock_prices": stock_prices},
     ]
+
+print(get_card_info("31-12-2021 16:42:04"))
