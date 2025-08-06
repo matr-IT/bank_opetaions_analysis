@@ -1,6 +1,4 @@
 import datetime
-import json
-from calendar import month
 
 import pandas as pd
 from dateutil.relativedelta import relativedelta
@@ -11,6 +9,7 @@ operations = load_transactions("/Users/rybin/PycharmProjects/bank_operations_ana
 
 
 def spending_by_category(transactions, category, date=None):
+    """Функция сортирует траты по категории"""
     if not date:
         date = datetime.datetime.now()
     date = pd.to_datetime(date)
@@ -28,4 +27,3 @@ def spending_by_category(transactions, category, date=None):
     return result
 
 
-print((spending_by_category(operations, "Супермаркеты", "31.12.2021 16:42:04")))

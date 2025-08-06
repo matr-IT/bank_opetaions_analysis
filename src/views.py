@@ -38,7 +38,7 @@ def load_transactions(file_path: str) -> pd.DataFrame:
 
 
 def get_card_info(date_time: str):
-    """Функция отображает данные по картам: номер, сумму трат по карте и полученный кэшбэк"""
+    """Функция отображает данные по картам: номер, сумму трат по карте и полученный кэшбэк, также отображает топ транзакций. курс пользовательских валют и стоимость пользовательских акций"""
     date_time_pd = pd.to_datetime(date_time)
     operations = load_transactions("/Users/rybin/PycharmProjects/bank_operations_analysis/data/operations.xlsx")
     operations["Дата операции"] = pd.to_datetime(operations["Дата операции"])

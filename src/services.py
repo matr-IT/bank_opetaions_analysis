@@ -5,7 +5,7 @@ from views import load_transactions
 
 
 def process_bank_search(search=None) -> json:
-    """Filters operations by keyword from their descriptions"""
+    """Фильтрует операции по ключевым словам из описания операции или категории"""
 
     operations = load_transactions(
         "/Users/rybin/PycharmProjects/bank_operations_analysis/data/operations.xlsx"
@@ -30,4 +30,3 @@ def process_bank_search(search=None) -> json:
         return "Транзакции не обнаружены"
 
 
-print(process_bank_search("Супермаркеты"))
