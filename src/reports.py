@@ -25,5 +25,3 @@ def spending_by_category(transactions, category, date=None):
             result.append(transaction)
 
     return result
-
-
