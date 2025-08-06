@@ -6,7 +6,7 @@ import pandas as pd
 import requests
 from dotenv import load_dotenv
 
-from utils import load_transactions, greeting
+from utils import greeting, load_transactions
 
 load_dotenv()
 
@@ -69,5 +69,6 @@ def get_card_info(date_time: str):
         {"currency_rates": currency_rates},
         {"stock_prices": stock_prices},
     ]
+
 
 print(get_card_info("31-12-2021 16:42:04"))
