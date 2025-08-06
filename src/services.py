@@ -31,4 +31,4 @@ def process_bank_search(search=None) -> json:
         return "Транзакции не обнаружены"
 
 
-print(process_bank_search("Билет"))
+print(process_bank_search("Супермаркеты"))
