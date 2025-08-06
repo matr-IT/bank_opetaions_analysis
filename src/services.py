@@ -28,3 +28,5 @@ def process_bank_search(search=None) -> json:
         return result
     else:
         return "Транзакции не обнаружены"
+
+# print(process_bank_search("РЖД"))
