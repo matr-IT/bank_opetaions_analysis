@@ -1,11 +1,9 @@
-import datetime
 import json
 import os
 
 import pandas as pd
 import requests
 from dotenv import load_dotenv
-from pandas import to_datetime
 
 from utils import greeting, load_transactions
 
@@ -73,4 +71,4 @@ def get_card_info(date_time: str):
     return result
 
 
-print(get_card_info("31-12-2021 16:42:04"))
+# print(get_card_info("31-12-2021 16:42:04"))
