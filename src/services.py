@@ -1,7 +1,6 @@
 import json
-import re
-
 import logging
+import re
 from pathlib import Path
 
 from views import load_transactions
@@ -45,5 +44,6 @@ def process_bank_search(search=None) -> json:
         return result
     else:
         return "Транзакции не обнаружены"
+
 
 # print(process_bank_search("РЖД"))

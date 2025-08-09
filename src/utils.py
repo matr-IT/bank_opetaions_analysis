@@ -1,6 +1,7 @@
-from datetime import datetime
 import logging
+from datetime import datetime
 from pathlib import Path
+
 import pandas as pd
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -16,6 +17,7 @@ file_handler = logging.FileHandler(LOG_FILE, encoding="utf-8")
 file_formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s: %(message)s")
 file_handler.setFormatter(file_formatter)
 logger.addHandler(file_handler)
+
 
 def greeting():
     """Приветствие исходя из текущего времени"""
