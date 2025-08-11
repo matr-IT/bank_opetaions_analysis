@@ -19,9 +19,10 @@ file_formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s: %(me
 file_handler.setFormatter(file_formatter)
 logger.addHandler(file_handler)
 
-operations = load_transactions(
-        "/Users/rybin/PycharmProjects/bank_operations_analysis/data/operations.xlsx"
-    ).to_dict(orient="records")
+operations = load_transactions("/Users/rybin/PycharmProjects/bank_operations_analysis/data/operations.xlsx").to_dict(
+    orient="records"
+)
+
 
 def process_bank_search(search=None) -> json:
     """Фильтрует операции по ключевым словам из описания операции или категории"""

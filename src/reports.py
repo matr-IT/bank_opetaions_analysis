@@ -1,10 +1,11 @@
-import datetime
 import logging
+from datetime import datetime, timedelta
 from pathlib import Path
 
 import pandas as pd
 from dateutil.relativedelta import relativedelta
 
+from decorators import report_writer
 from views import load_transactions
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,17 +25,19 @@ logger.addHandler(file_handler)
 operations = load_transactions("/Users/rybin/PycharmProjects/bank_operations_analysis/data/operations.xlsx")
 
 
+@report_writer()
 def spending_by_category(transactions, category, date=None):
     """Функция сортирует траты по категории"""
     logger.info("Проверяем наличие аргумента 'дата'")
     if not date:
-        date = datetime.datetime.now()
+        date = datetime.now()
     date = pd.to_datetime(date)
     logger.info("Определяем первый день отчетного периода")
-    first_day_of_period = date + relativedelta(months=-3)
+    first_day_of_period = date - relativedelta(months=3)
     transactions["Дата операции"] = pd.to_datetime(transactions["Дата операции"])
     filtered = transactions[transactions["Дата операции"] >= first_day_of_period]
     filtered = filtered[filtered["Дата операции"] <= date]
+    filtered["Дата операции"] = filtered["Дата операции"].astype("str")
     filtered = filtered.to_dict(orient="records")
 
     result = []
@@ -46,3 +49,6 @@ def spending_by_category(transactions, category, date=None):
         return result
     else:
         return "Транзакции в данной категории не обнаружены"
+
+
+print((spending_by_category(operations, "Такси", "31.12.2021 16:42:04")))
