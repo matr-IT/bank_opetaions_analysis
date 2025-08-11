@@ -1,45 +1,20 @@
 import json
 import os
 
+import pandas as pd
 import requests
 from dotenv import load_dotenv
-import datetime
 
-import pandas as pd
+from src.utils import greeting, load_transactions
 
 load_dotenv()
-
-
-def greeting():
-    """Приветствие исходя из текущего времени"""
-    time = datetime.datetime.now()
-    hour = time.hour
-    if 5 <= hour < 12:
-        return "Доброе утро"
-    elif 12 <= hour < 18:
-        return "Добрый день"
-    elif 18 <= hour < 24:
-        return "Добрый вечер"
-    else:
-        return "Доброй ночи"
 
 
 greet = greeting()
 
 
-def load_transactions(file_path: str) -> pd.DataFrame:
-    """Читает Excel-файл и выдает DataFrame"""
-    try:
-        df = pd.read_excel(file_path)
-        return df
-    except ValueError as ex:
-        print(ex)
-    except FileNotFoundError as ex:
-        print(ex)
-
-
 def get_card_info(date_time: str):
-    """Функция отображает данные по картам: номер, сумму трат по карте и полученный кэшбэк"""
+    """Функция отображает данные по картам: номер, сумму трат по карте и полученный кэшбэк, также отображает топ транзакций. курс пользовательских валют и стоимость пользовательских акций"""
     date_time_pd = pd.to_datetime(date_time)
     operations = load_transactions("/Users/rybin/PycharmProjects/bank_operations_analysis/data/operations.xlsx")
     operations["Дата операции"] = pd.to_datetime(operations["Дата операции"])
@@ -86,10 +61,14 @@ def get_card_info(date_time: str):
         price = float(response["Global Quote"]["08. previous close"])
         stock_prices.append({"stock": st, "price": price})
 
-    return [
+    result = [
         {"greeting": greet},
         {"cards": card_data},
         {"top_transactions": top_transactions},
         {"currency_rates": currency_rates},
         {"stock_prices": stock_prices},
     ]
+    return result
+
+
+# print(get_card_info("31-12-2021 16:42:04"))
