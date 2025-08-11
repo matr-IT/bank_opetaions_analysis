@@ -3,7 +3,7 @@ import logging
 import re
 from pathlib import Path
 
-from views import load_transactions
+from src.views import load_transactions
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 LOG_DIR = BASE_DIR / "logs"
