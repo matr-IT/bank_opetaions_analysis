@@ -61,7 +61,6 @@ def test_file_not_found_error(mock_read_excel, caplog):
 
     result = load_transactions("non_existent_file.xlsx")
 
-    # Проверяем результат и логи
     assert result is None
 
 

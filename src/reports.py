@@ -5,8 +5,8 @@ from pathlib import Path
 import pandas as pd
 from dateutil.relativedelta import relativedelta
 
-from decorators import report_writer
-from views import load_transactions
+from src.decorators import report_writer
+from src.views import load_transactions
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 LOG_DIR = BASE_DIR / "logs"
