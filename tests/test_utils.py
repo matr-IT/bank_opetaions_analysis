@@ -1,11 +1,10 @@
 from datetime import datetime
 from unittest.mock import MagicMock, patch
+
 import pandas as pd
-
-
 import pytest
 
-from utils import greeting, load_transactions
+from src.utils import greeting, load_transactions
 
 
 @pytest.mark.parametrize(
@@ -27,16 +26,12 @@ def test_greeting(hour, expected):
     """
     mock_time = datetime(2024, 1, 1, hour, 0, 0)
 
-    with patch("utils.datetime") as mock_datetime, patch("utils.logger", MagicMock()):
+    with patch("src.utils.datetime") as mock_datetime, patch("src.utils.logger", MagicMock()):
         mock_datetime.now.return_value = mock_time
 
         result = greeting()
 
         assert result == expected
-
-
-
-
 
 
 @pytest.fixture
@@ -59,7 +54,7 @@ def test_successful_load(mock_excel_file, caplog):
     assert list(result.columns) == ["id", "amount"]
 
 
-@patch("utils.pd.read_excel")
+@patch("src.utils.pd.read_excel")
 def test_file_not_found_error(mock_read_excel, caplog):
     """Тест обработки ошибки отсутствия файла"""
     mock_read_excel.side_effect = FileNotFoundError("Файл не найден")
@@ -70,7 +65,7 @@ def test_file_not_found_error(mock_read_excel, caplog):
     assert result is None
 
 
-@patch("utils.pd.read_excel")
+@patch("src.utils.pd.read_excel")
 def test_value_error(mock_read_excel, caplog):
     """Тест обработки ошибки невалидного файла"""
     mock_read_excel.side_effect = ValueError("Неправильный формат")

@@ -5,7 +5,7 @@ import pandas as pd
 import requests
 from dotenv import load_dotenv
 
-from utils import greeting, load_transactions
+from src.utils import greeting, load_transactions
 
 load_dotenv()
 
